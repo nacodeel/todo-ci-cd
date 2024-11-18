@@ -16,3 +16,9 @@ class ToDoApp:
             raise ValueError(f"Task '{task}' not found")
         self.tasks.remove(task)
         return f"Task '{task}' removed"
+
+    def mark_task_done(self, task):
+        if task not in self.tasks:
+            raise ValueError(f"Task '{task}' not found")
+        self.tasks[self.tasks.index(task)] = f"{task} (done)"
+        return f"Task '{task}' marked as done"
