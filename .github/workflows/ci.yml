@@ -3,28 +3,30 @@ name: CI/CD for ToDo App
 on:
   push:
     branches:
-      - main  # Запускать CI на коммиты в ветку main
+      - main
   pull_request:
     branches:
-      - main  # Запускать CI на pull request в main
+      - main
 
 jobs:
   test:
-    runs-on: ubuntu-latest  # Среда для запуска тестов
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3  # Копирование кода из репозитория
+        uses: actions/checkout@v3
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9'  # Версия Python
+          python-version: '3.9'
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt  # Установка зависимостей
+          pip install -r requirements.txt
 
       - name: Run tests
-        run: pytest  # Запуск тестов
+        env:
+          PYTHONPATH: ${{ github.workspace }}  # Добавляем путь к проекту в PYTHONPATH
+        run: pytest
